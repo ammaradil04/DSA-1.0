@@ -1,0 +1,49 @@
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+class Solution {
+public:
+    long long countSubarrays(vector<int>& nums, int k) {
+        int size = nums.size();
+        int i = 0; // Pointer for the start of the window
+        int j = 0; // Pointer for the end of the window
+        int maxi = *max_element(nums.begin(), nums.end()); // Find the maximum element in the array
+        int count = 0; // Counter for the number of occurrences of the maximum element
+        long long ans = 0; // Variable to store the total number of subarrays
+
+        // Traverse through the array using the window technique
+        while (j < size) {
+            // Increment count if the current element is equal to the maximum element
+            if (nums[j] == maxi) {
+                count++;
+            }
+            
+            // If count is less than k, expand the window by moving j
+            if (count < k) {
+                j++;
+            } 
+            // If count is equal to k, slide the window and count the subarrays
+            else if (count == k) {
+                while (count == k) {
+                    // Count the subarrays with the current window size
+                    ans += (size - j);
+                    // Move the window by decrementing count and incrementing i
+                    if (nums[i] == maxi) {
+                        count--;
+                    }
+                    i++;
+                }
+                // After sliding the window, if count is still equal to k, update ans
+                if (count == k) {
+                    ans += (size - j);
+                }
+                // Move j to expand the window
+                j++;
+            }
+        }
+        // Return the total number of subarrays
+        return ans;
+    }
+};
