@@ -1,0 +1,22 @@
+class Solution {
+public:
+    // Function to count the number of alternating subarrays in the given array.
+    // An alternating subarray is a contiguous subarray where the elements alternate between even and odd values.
+    // Parameters:
+    // - nums: The input array of integers.
+    // Returns:
+    // - The count of alternating subarrays.
+    long long countAlternatingSubarrays(vector<int>& nums) {
+        long long ans = 0; // Variable to store the total count of alternating subarrays.
+        for(int i = 0; i < nums.size(); i++) {
+            int j = i; // Pointer to traverse the array.
+            while(j < nums.size() - 1 && nums[j] != nums[j + 1]) {
+                j++; // Move the pointer until the elements are alternating.
+            }
+            long long n = j - i + 1; // Length of the alternating subarray.
+            ans += n * (n + 1) / 2; // Add the count of subarrays to the total.
+            i = j; // Move the main pointer to the end of the alternating subarray.
+        }
+        return ans; // Return the total count of alternating subarrays.
+    }
+};
