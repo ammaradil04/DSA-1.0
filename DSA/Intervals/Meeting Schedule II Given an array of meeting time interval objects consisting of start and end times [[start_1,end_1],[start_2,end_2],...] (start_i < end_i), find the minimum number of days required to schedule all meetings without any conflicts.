@@ -1,0 +1,32 @@
+#include <queue>
+
+class Solution {
+public:
+    int minMeetingRooms(vector<Interval>& intervals) {
+        if (intervals.empty()) return 0;
+        
+        // Sort intervals by start time
+        sort(intervals.begin(), intervals.end(), [](const Interval& a, const Interval& b) {
+            return a.start < b.start;
+        });
+        
+        // Min-heap to keep track of end times of ongoing meetings
+        priority_queue<int, vector<int>, greater<int>> minHeap;
+        
+        // Add the end time of the first meeting to the min-heap
+        minHeap.push(intervals[0].end);
+        
+        // Iterate over the rest of the intervals
+        for (int i = 1; i < intervals.size(); ++i) {
+            if (intervals[i].start >= minHeap.top()) {
+                // The current meeting can reuse a room, update end time
+                minHeap.pop();
+            }
+            // Add the end time of the current meeting to the min-heap
+            minHeap.push(intervals[i].end);
+        }
+        
+        // The size of the min-heap gives the minimum number of meeting rooms needed
+        return minHeap.size();
+    }
+};
