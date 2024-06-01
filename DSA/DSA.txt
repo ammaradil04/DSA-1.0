@@ -1,1 +1,10 @@
-Mistake
+// Inserting characters into the hash array
+    m['a'] =-1;
+    m['b'] =-1;
+    m['c'] =-1;
+
+//puting more than two argument in min
+min({m['a'], m['b'], m['c']});
+
+// Convert the character to its ASCII value
+  int ascii_value = static_cast<int>(c);
